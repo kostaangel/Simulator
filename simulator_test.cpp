@@ -563,6 +563,19 @@ void Simulator_Test::createInitJobXml()
     sendSyncDataRequestElement.setAttribute("xsi:schemaLocation", "http://stc.daimler.com/2009/08/DS/ext file:///C:/Xentry_Portal/Schnittstellen_Spezifikationen/XML-Schema_V_1.4.5/XML-Instanzen-V1.4.5/03_DataServer_Instanzen/XML-Artefacts/XML-Artefacts/StarConnectDataServerExt.xsd");
     bodyElement.appendChild(sendSyncDataRequestElement);
 
+    QDomElement typeElement = domDocument->createElement("ext:type");
+    QDomText typeText = domDocument->createTextNode("SERVICE_JOB_z");
+    typeElement.appendChild(typeText);
+    sendSyncDataRequestElement.appendChild(typeElement);
+
+    QDomElement eventElement = domDocument->createElement("ext:event");
+    QDomText eventText = domDocument->createTextNode("UPDATE");
+    eventElement.appendChild(eventText);
+    sendSyncDataRequestElement.appendChild(eventElement);
+
+    QDomElement dataElement = domDocument->createElement("ext:data");
+    sendSyncDataRequestElement.appendChild(dataElement);
+
     domDocument->appendChild(envelopeElement);
 
     qDebug()<<domDocument->toString();
