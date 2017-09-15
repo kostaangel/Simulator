@@ -11,6 +11,7 @@
 #include <QDateTime>
 #include <QXmlStreamWriter>
 #include <QDomDocument>
+#include "qcompressor.h"
 
 Simulator_Test::Simulator_Test(QWidget *parent)
     : QWidget(parent)
@@ -113,7 +114,7 @@ void Simulator_Test::finished(QNetworkReply *reply)
         QByteArray replyByteArray = reply->readAll();
         QString replyString = QString(replyByteArray);
         qDebug()<<"replyString = "<<replyString;
-
+        parseXml(replyByteArray);
     }
     else
     {
@@ -131,13 +132,16 @@ void Simulator_Test::sslErrorIgnore(QNetworkReply* reply, const QList<QSslError>
 
 void Simulator_Test::initJobRequest()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
+//    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/Server?action=connect&id=GS0004675"));
+//    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/Server"));
 
     QNetworkRequest request(url);
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml;charset=UTF-8;action=\"SendSyncData\"");
 
-    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/InitJob_Request_01.xml", this);
+    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/InitJob_Request.xml", this);
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
             return;
 
@@ -178,7 +182,6 @@ void Simulator_Test::GetPricesTechnicalJobResponceSlot()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml;charset=UTF-8;action=\"SendSyncResponse\"");
 
     QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/GetPricesTechnicalJob_Response.xml", this);
-//    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/InitJob_Request_01.xml", this);
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
             return;
 
@@ -458,7 +461,8 @@ void Simulator_Test::ServiceFault_from_XENTRY_PortalSlot()
 
 void Simulator_Test::ConnectPartsListAndOrderRequestSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -477,7 +481,8 @@ void Simulator_Test::ConnectPartsListAndOrderRequestSlot()
 
 void Simulator_Test::GetDetailsFromPartsSearchRequestSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -525,6 +530,70 @@ void Simulator_Test::authenticationNeeded(QNetworkReply *reply, QAuthenticator *
 void Simulator_Test::testFunc()
 {
     qDebug()<<"testFunc();";
+}
+
+void Simulator_Test::parseXml(QByteArray replyString)
+{
+    QDomDocument *doc = new QDomDocument();
+
+    doc->setContent(replyString);
+
+
+
+    QDomElement root = doc->documentElement();
+    QDomElement compressedData = root.firstChildElement("soapenv:Body").firstChildElement("stcdsext:sendSyncDataResponse")
+            .firstChildElement("stcdsext:data").firstChildElement("stcds:compressedData");
+
+    qDebug()<<"compressedData = "<<compressedData.text().left(compressedData.text().length()).toLatin1();
+    QStringList compresedList = compressedData.text().split("\r");
+//    for(int i = 0;i < compresedList.length();i++)
+//    {
+//        qDebug()<<i<<" - "<<compresedList.at(i);
+//        qDebug()<<qUncompress(compresedList.at(i).toAscii());
+//    }
+
+    int startPos = 0;
+    int endPos = 0;
+    for(int i = 0;i<replyString.length();i++)
+    {
+        if(replyString.left(i).endsWith("<stcds:compressedData stcds:compression=\"GZIP\">"))
+            startPos = i;
+
+        if(replyString.right(i).startsWith("</stcds:compressedData>"))
+        {
+//            qDebug()<<i<<" - "<<replyString.right(i);
+            endPos = replyString.length() - i;
+        }
+    }
+
+
+    qDebug()<<startPos<<", "<<endPos;
+    qDebug()<<"result = "<<replyString.mid(startPos, endPos - startPos);
+
+    QByteArray decompress;
+    if(QCompressor::gzipDecompress(compressedData.text().toLatin1(), decompress))
+        qDebug()<<"decompress = "<<decompress;
+    else
+        qDebug()<<"ne moze da se dekompresira";
+
+    qDebug()<<"gUncompress - "<<gUncompress(compressedData.text().toLatin1());
+
+//    QFile *fi = new QFile("/home/kostadin/brisi.txt.gz", this);
+    QString filename = "/home/kostadin32/brisi.txt.gz";
+    QFile file( filename );
+    if ( file.open(QIODevice::ReadWrite) )
+    {
+        QTextStream stream( &file );
+        stream << compressedData.text().toLatin1();
+    }
+
+
+    file.close();
+//    QByteArray decompress;
+//    QCompressor::gzipDecompress(compressedData.text().toLatin1(), decompress);
+
+//    qDebug()<<"decompress = "<<qUncompress(compressedData.text().toAscii());
+
 }
 
 void Simulator_Test::createInitJobXml()
@@ -579,4 +648,57 @@ void Simulator_Test::createInitJobXml()
     domDocument->appendChild(envelopeElement);
 
     qDebug()<<domDocument->toString();
+}
+
+QByteArray Simulator_Test::gUncompress(const QByteArray &data)
+{
+    if (data.size() <= 4) {
+        qWarning("gUncompress: Input data is truncated");
+        return QByteArray();
+    }
+
+    QByteArray result;
+
+    int ret;
+    z_stream strm;
+    static const int CHUNK_SIZE = 1024;
+    char out[CHUNK_SIZE];
+
+    /* allocate inflate state */
+    strm.zalloc = Z_NULL;
+    strm.zfree = Z_NULL;
+    strm.opaque = Z_NULL;
+    strm.avail_in = data.size();
+    strm.next_in = (Bytef*)(data.data());
+
+    ret = inflateInit2(&strm, 15 + 32); // gzip decoding
+    if (ret != Z_OK)
+        return QByteArray();
+
+
+    // run inflate()
+    do {
+        strm.avail_out = CHUNK_SIZE;
+        strm.next_out = (Bytef*)(out);
+
+        ret = inflate(&strm, Z_NO_FLUSH);
+
+        Q_ASSERT(ret != Z_STREAM_ERROR);  // state not clobbered
+
+//        qDebug()<<"ret = "<<ret;
+        switch (ret) {
+        case Z_NEED_DICT:
+            ret = Z_DATA_ERROR;     // and fall through
+        case Z_DATA_ERROR:
+        case Z_MEM_ERROR:
+            (void)inflateEnd(&strm);
+            return QByteArray();
+        }
+
+        result.append(out, CHUNK_SIZE - strm.avail_out);
+    } while (strm.avail_out == 0);
+
+    // clean up and return
+    inflateEnd(&strm);
+    return result;
 }

@@ -40,6 +40,9 @@ private:
 
     void setupUi();
 
+    void parseXml(QByteArray replyString);
+    QByteArray gUncompress(const QByteArray &data);
+
 private slots:
     void finished(QNetworkReply *reply);
     void sslErrorIgnore(QNetworkReply* qnr, const QList<QSslError> & errlist);

@@ -11,8 +11,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Simulator
 TEMPLATE = app
 
+LIBS += -lz
 
 SOURCES += main.cpp\
-        simulator_test.cpp
+        simulator_test.cpp \
+    qcompressor.cpp
 
-HEADERS  += simulator_test.h
+HEADERS  += simulator_test.h \
+    qcompressor.h
