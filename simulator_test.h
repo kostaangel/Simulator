@@ -42,6 +42,7 @@ private:
 
     void parseXml(QByteArray replyString);
     QByteArray gUncompress(const QByteArray &data);
+    QByteArray gzipDecompress( QByteArray compressData );
 
 private slots:
     void finished(QNetworkReply *reply);

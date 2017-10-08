@@ -13,6 +13,7 @@
 #include <QDomDocument>
 #include "qcompressor.h"
 
+
 Simulator_Test::Simulator_Test(QWidget *parent)
     : QWidget(parent)
 {
@@ -26,6 +27,28 @@ Simulator_Test::Simulator_Test(QWidget *parent)
     setupUi();
 
 //    initJobRequest();
+//    QString filename = "/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/initJobReturnMessageRequest.xml";
+//    QFile file( filename );
+//    if ( file.open(QIODevice::ReadOnly) )
+//    {
+//        QTextStream stream( &file );
+//        QString text = stream.readAll();
+//        qDebug()<<text;
+
+
+//        QByteArray compressedText;
+//        QCompressor::gzipCompress(text.toLatin1(), compressedText);
+
+//        qDebug()<<"compressedText = "<<compressedText.toBase64();
+
+//        QByteArray decompressedText;
+//        QCompressor::gzipDecompress(compressedText.toBase64(), decompressedText);
+
+//        qDebug()<<"decompressedText = "<<decompressedText;
+//    }
+
+
+//    file.close();
 }
 
 Simulator_Test::~Simulator_Test()
@@ -140,6 +163,7 @@ void Simulator_Test::initJobRequest()
     QNetworkRequest request(url);
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml;charset=UTF-8;action=\"SendSyncData\"");
+//    request.setRawHeader("Accept-Encoding", "gzip");
 
     QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/InitJob_Request.xml", this);
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
@@ -155,7 +179,8 @@ void Simulator_Test::initJobRequest()
 
 void Simulator_Test::GetPricesTechnicalJob_getDataByIdSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -175,7 +200,8 @@ void Simulator_Test::GetPricesTechnicalJob_getDataByIdSlot()
 
 void Simulator_Test::GetPricesTechnicalJobResponceSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -194,7 +220,8 @@ void Simulator_Test::GetPricesTechnicalJobResponceSlot()
 
 void Simulator_Test::GetPricesTechnicalJob_Deactivated_Request_getDataByIdSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -214,7 +241,8 @@ void Simulator_Test::GetPricesTechnicalJob_Deactivated_Request_getDataByIdSlot()
 
 void Simulator_Test::GetPricesTechnicalJob_Deactivated_ResponseSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -233,7 +261,8 @@ void Simulator_Test::GetPricesTechnicalJob_Deactivated_ResponseSlot()
 
 void Simulator_Test::TransferJobToDms_Request_getDataByIdSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -252,7 +281,8 @@ void Simulator_Test::TransferJobToDms_Request_getDataByIdSlot()
 
 void Simulator_Test::TransferJobToDms_ResponseSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -271,7 +301,8 @@ void Simulator_Test::TransferJobToDms_ResponseSlot()
 
 void Simulator_Test::TransferJobToErepko_ResponseSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -290,7 +321,8 @@ void Simulator_Test::TransferJobToErepko_ResponseSlot()
 
 void Simulator_Test::FinishOrderResponseSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -309,7 +341,8 @@ void Simulator_Test::FinishOrderResponseSlot()
 
 void Simulator_Test::GetInvoiceCodesRequest_getDataByIdSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -328,7 +361,8 @@ void Simulator_Test::GetInvoiceCodesRequest_getDataByIdSlot()
 
 void Simulator_Test::GetInvoiceCodesResponseSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -347,7 +381,8 @@ void Simulator_Test::GetInvoiceCodesResponseSlot()
 
 void Simulator_Test::RunVerificationRequest_getDataByIdSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -366,7 +401,8 @@ void Simulator_Test::RunVerificationRequest_getDataByIdSlot()
 
 void Simulator_Test::RunVerificationResponseSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -385,7 +421,8 @@ void Simulator_Test::RunVerificationResponseSlot()
 
 void Simulator_Test::GetLocalOperationsRequest_getDataByIdSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -404,7 +441,8 @@ void Simulator_Test::GetLocalOperationsRequest_getDataByIdSlot()
 
 void Simulator_Test::GetLocalOperationsResponseSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -423,7 +461,8 @@ void Simulator_Test::GetLocalOperationsResponseSlot()
 
 void Simulator_Test::ServiceFault_from_DMSSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -442,7 +481,8 @@ void Simulator_Test::ServiceFault_from_DMSSlot()
 
 void Simulator_Test::ServiceFault_from_XENTRY_PortalSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
@@ -489,7 +529,7 @@ void Simulator_Test::GetDetailsFromPartsSearchRequestSlot()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml;charset=UTF-8;action=\"SendSyncData\"");
 
     QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/GetDetailsFromPartsSearchRequest.xml", this);
-//    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/InitJob_Request_01.xml", this);
+
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
             return;
 
@@ -502,14 +542,15 @@ void Simulator_Test::GetDetailsFromPartsSearchRequestSlot()
 
 void Simulator_Test::GetPricesPartsResponseSlot()
 {
-    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+//    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
+    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 
     QNetworkRequest request(url);
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml;charset=UTF-8;action=\"SendSyncResponse\"");
 
     QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/GetPricesPartsResponse.xml", this);
-//    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/InitJob_Request_01.xml", this);
+//    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/GetPricesPartsRequest.xml", this);
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
             return;
 
@@ -544,7 +585,7 @@ void Simulator_Test::parseXml(QByteArray replyString)
     QDomElement compressedData = root.firstChildElement("soapenv:Body").firstChildElement("stcdsext:sendSyncDataResponse")
             .firstChildElement("stcdsext:data").firstChildElement("stcds:compressedData");
 
-    qDebug()<<"compressedData = "<<compressedData.text().left(compressedData.text().length()).toLatin1();
+    qDebug()<<"compressedData = "<<compressedData.text().toLatin1();
     QStringList compresedList = compressedData.text().split("\r");
 //    for(int i = 0;i < compresedList.length();i++)
 //    {
@@ -567,16 +608,19 @@ void Simulator_Test::parseXml(QByteArray replyString)
     }
 
 
-    qDebug()<<startPos<<", "<<endPos;
-    qDebug()<<"result = "<<replyString.mid(startPos, endPos - startPos);
+//    qDebug()<<startPos<<", "<<endPos;
+//    qDebug()<<"result = "<<replyString.mid(startPos, endPos - startPos);
 
-    QByteArray decompress;
-    if(QCompressor::gzipDecompress(compressedData.text().toLatin1(), decompress))
-        qDebug()<<"decompress = "<<decompress;
-    else
-        qDebug()<<"ne moze da se dekompresira";
+//    QByteArray decompress;
+//    if(QCompressor::gzipDecompress(compressedData.text().toLatin1(), decompress))
+//        qDebug()<<"decompress = "<<decompress;
+//    else
+//        qDebug()<<"ne moze da se dekompresira";
 
-    qDebug()<<"gUncompress - "<<gUncompress(compressedData.text().toLatin1());
+    QByteArray text4Decompresion = QByteArray::fromBase64(compressedData.text().toLatin1());
+
+    qDebug()<<"gUncompress - "<<gUncompress(text4Decompresion);
+//    qDebug()<<"gzipDecompress() = "<<gzipDecompress(compressedData.text().toLatin1());
 
 //    QFile *fi = new QFile("/home/kostadin/brisi.txt.gz", this);
     QString filename = "/home/kostadin32/brisi.txt.gz";
@@ -584,7 +628,7 @@ void Simulator_Test::parseXml(QByteArray replyString)
     if ( file.open(QIODevice::ReadWrite) )
     {
         QTextStream stream( &file );
-        stream << compressedData.text().toLatin1();
+        stream << QByteArray::fromBase64(compressedData.text().toLatin1());
     }
 
 
@@ -657,11 +701,13 @@ QByteArray Simulator_Test::gUncompress(const QByteArray &data)
         return QByteArray();
     }
 
+    qDebug()<<data.size();
+
     QByteArray result;
 
     int ret;
     z_stream strm;
-    static const int CHUNK_SIZE = 1024;
+    static const int CHUNK_SIZE = 32*1024;//1024;
     char out[CHUNK_SIZE];
 
     /* allocate inflate state */
@@ -701,4 +747,59 @@ QByteArray Simulator_Test::gUncompress(const QByteArray &data)
     // clean up and return
     inflateEnd(&strm);
     return result;
+}
+
+QByteArray Simulator_Test::gzipDecompress( QByteArray compressData )
+{
+    //strip header
+        compressData.remove(0, 10);
+
+        const int buffer_size = 32*1024;
+        quint8 buffer[buffer_size];
+
+        z_stream cmpr_stream;
+        cmpr_stream.next_in = (unsigned char *)compressData.data();
+        cmpr_stream.avail_in = compressData.size();
+        cmpr_stream.total_in = 0;
+
+        cmpr_stream.next_out = buffer;
+        cmpr_stream.avail_out = buffer_size;
+        cmpr_stream.total_out = 0;
+
+        cmpr_stream.zalloc = Z_NULL;
+        cmpr_stream.zfree = Z_NULL;
+        cmpr_stream.opaque = Z_NULL;
+
+        int status = inflateInit2( &cmpr_stream, -8 );
+        if (status != Z_OK) {
+            qDebug() << "cmpr_stream error!";
+        }
+
+        QByteArray uncompressed;
+        do {
+            cmpr_stream.next_out = buffer;
+            cmpr_stream.avail_out = buffer_size;
+
+            status = inflate( &cmpr_stream, Z_NO_FLUSH );
+
+            if (status == Z_OK || status == Z_STREAM_END)
+            {
+                QByteArray chunk = QByteArray::fromRawData((char *)buffer, buffer_size - cmpr_stream.avail_out);
+                uncompressed.append( chunk );
+            }
+            else
+            {
+                inflateEnd(&cmpr_stream);
+                break;
+            }
+
+            if (status == Z_STREAM_END)
+            {
+                inflateEnd(&cmpr_stream);
+                break;
+            }
+        }
+        while (cmpr_stream.avail_out == 0);
+
+        return uncompressed;
 }

@@ -186,7 +186,7 @@ bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
 
             } while (strm.avail_out == 0);
 
-            qDebug()<<"output = "<<output;
+//            qDebug()<<"output = "<<output;
         } while (ret != Z_STREAM_END);
 
 
