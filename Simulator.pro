@@ -15,7 +15,9 @@ LIBS += -lz
 
 SOURCES += main.cpp\
         simulator_test.cpp \
-    qcompressor.cpp
+    qcompressor.cpp \
+    initjobbox.cpp
 
 HEADERS  += simulator_test.h \
-    qcompressor.h
+    qcompressor.h \
+    initjobbox.h

@@ -12,7 +12,7 @@
 #include <QXmlStreamWriter>
 #include <QDomDocument>
 #include "qcompressor.h"
-
+#include "initjobbox.h"
 
 Simulator_Test::Simulator_Test(QWidget *parent)
     : QWidget(parent)
@@ -155,6 +155,10 @@ void Simulator_Test::sslErrorIgnore(QNetworkReply* reply, const QList<QSslError>
 
 void Simulator_Test::initJobRequest()
 {
+//    InitJobBox *form = new InitJobBox(this);
+//    form->exec();
+
+//    return;
 //    QUrl url(QString("http://192.166.58.228/dmstt/rest/xpSimulator/2_4"));
     QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/ExternalInterface"));
 //    QUrl url(QString("https://srs-ds-int1.i.daimler.com/STARCDS/services/Server?action=connect&id=GS0004675"));
@@ -165,14 +169,16 @@ void Simulator_Test::initJobRequest()
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml;charset=UTF-8;action=\"SendSyncData\"");
 //    request.setRawHeader("Accept-Encoding", "gzip");
 
-    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/InitJob_Request.xml", this);
+    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/InitJob_Request_Basic.xml", this);
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
             return;
 
+//    QByteArray fajlText = form->createInitJobXml().toAscii();
     QByteArray fajlText = file->readAll();
 
     m_nam->post(request, fajlText);
     qDebug()<<"initJobRequest(); - "<<QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss");
+    qDebug()<<fajlText;
 //    createInitJobXml();
 
 }
@@ -288,7 +294,8 @@ void Simulator_Test::TransferJobToDms_ResponseSlot()
 
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/soap+xml;charset=UTF-8;action=\"SendSyncResponse\"");
 
-    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/TransferJobToDms_Response.xml", this);
+//    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/TransferJobToDms_Response.xml", this);
+    QFile *file = new QFile("/home/kostadin32/Documents/Knigi/Xentry/XML_primeri/TransferJobToDms_Request_Basic.xml", this);
     if (!file->open(QIODevice::ReadOnly | QIODevice::Text))
             return;
 
